@@ -59,6 +59,65 @@ on property:sys.boot_completed=1
     write /dev/stune/top-app/schedtune.prefer_idle 1
     write /dev/stune/top-app/schedtune.boost 10
 
+    # Configure schedutil rate limits times
+    write /sys/devices/system/cpu/cpu0/cpufreq/schedutil/up_rate_limit_us 500
+    write /sys/devices/system/cpu/cpu4/cpufreq/schedutil/up_rate_limit_us 500
+
+    # Configure scheduler
+    write /proc/sys/kernel/sched_upmigrate "65 85"
+    write /proc/sys/kernel/sched_downmigrate "60 75"
+    write /proc/sys/kernel/sched_group_upmigrate 95
+    write /proc/sys/kernel/sched_group_downmigrate 75
+    write /proc/sys/kernel/sched_min_task_util_for_boost 0
+    write /proc/sys/kernel/sched_min_task_util_for_colocation 0
+
+    # Enable bus-dcvs
+    write /sys/devices/platform/soc/soc:qcom,cpu-cpu-ddr-bw/devfreq/soc:qcom,cpu-cpu-ddr-bw/governor "bw_hwmon"
+    write /sys/devices/platform/soc/soc:qcom,cpu-cpu-ddr-bw/devfreq/soc:qcom,cpu-cpu-ddr-bw/polling_interval 50
+    write /sys/devices/platform/soc/soc:qcom,cpu-cpu-ddr-bw/devfreq/soc:qcom,cpu-cpu-ddr-bw/min_freq 762
+    write /sys/devices/platform/soc/soc:qcom,cpu-cpu-ddr-bw/devfreq/soc:qcom,cpu-cpu-ddr-bw/bw_hwmon/mbps_zones "2288 3440 4173 5195 5859 7759 10322 11863 13763 15960"
+    write /sys/devices/platform/soc/soc:qcom,cpu-cpu-ddr-bw/devfreq/soc:qcom,cpu-cpu-ddr-bw/bw_hwmon/io_percent 85
+    write /sys/devices/platform/soc/soc:qcom,cpu-cpu-ddr-bw/devfreq/soc:qcom,cpu-cpu-ddr-bw/bw_hwmon/sample_ms 4
+    write /sys/devices/platform/soc/soc:qcom,cpu-cpu-ddr-bw/devfreq/soc:qcom,cpu-cpu-ddr-bw/bw_hwmon/decay_rate 90
+    write /sys/devices/platform/soc/soc:qcom,cpu-cpu-ddr-bw/devfreq/soc:qcom,cpu-cpu-ddr-bw/bw_hwmon/bw_step 190
+    write /sys/devices/platform/soc/soc:qcom,cpu-cpu-ddr-bw/devfreq/soc:qcom,cpu-cpu-ddr-bw/bw_hwmon/hist_memory 20
+    write /sys/devices/platform/soc/soc:qcom,cpu-cpu-ddr-bw/devfreq/soc:qcom,cpu-cpu-ddr-bw/bw_hwmon/hyst_length 0
+    write /sys/devices/platform/soc/soc:qcom,cpu-cpu-ddr-bw/devfreq/soc:qcom,cpu-cpu-ddr-bw/bw_hwmon/down_thres 80
+    write /sys/devices/platform/soc/soc:qcom,cpu-cpu-ddr-bw/devfreq/soc:qcom,cpu-cpu-ddr-bw/bw_hwmon/guard_band_mbps 0
+    write /sys/devices/platform/soc/soc:qcom,cpu-cpu-ddr-bw/devfreq/soc:qcom,cpu-cpu-ddr-bw/bw_hwmon/up_scale 250
+    write /sys/devices/platform/soc/soc:qcom,cpu-cpu-ddr-bw/devfreq/soc:qcom,cpu-cpu-ddr-bw/bw_hwmon/idle_mbps 1600
+
+    # Enable powersaving
+    write /sys/module/lpm_levels/parameters/sleep_disabled 0
+
+    # Enable UFS powersaving
+    write /sys/devices/platform/soc/4804000.ufshc/clkgate_enable 1
+    
+    # Setup final cpu.uclamp.min
+    write /dev/cpuctl/top-app/cpu.uclamp.min 0.00
+    write /dev/cpuctl/foreground/cpu.uclamp.min 0.00
+    write /dev/cpuctl/system/cpu.uclamp.min 0.00
+
+    # Set uclamp.max for some groups, which could indicate cpu importance used in scheduling
+    write /dev/cpuctl/background/cpu.uclamp.max 51.20
+    write /dev/cpuctl/system-background/cpu.uclamp.max 51.20
+    write /dev/cpuctl/dex2oat/cpu.uclamp.max 61.50
+
+    # Setup cpu.shares to throttle background group at 5%
+    write /dev/cpuctl/background/cpu.shares 1024
+    write /dev/cpuctl/system/cpu.shares 20480
+    # We only have system and background groups holding tasks and the groups below are empty
+    write /dev/cpuctl/camera-daemon/cpu.shares 20480
+    write /dev/cpuctl/foreground/cpu.shares 20480
+    write /dev/cpuctl/nnapi-hal/cpu.shares 20480
+    write /dev/cpuctl/rt/cpu.shares 20480
+    write /dev/cpuctl/system-background/cpu.shares 20480
+    write /dev/cpuctl/top-app/cpu.shares 20480
+
+    # Runtime fs tuning
+    write /sys/block/sda/queue/nr_requests 128
+    write /sys/block/sda/queue/iostats 1
+
     # Setup runtime blkio
     # value for group_idle is us
     write /dev/blkio/blkio.weight 1000
