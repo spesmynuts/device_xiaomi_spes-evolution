@@ -25,9 +25,3 @@ git clone https://github.com/tanvirr007/kernel_xiaomi_sm6225 -b NaughtySilver ke
 # Lineage-21 Hardware Source
 echo -e "${color}Cloning Hardware from Lineage-21${end}"
 git clone https://github.com/LineageOS/android_hardware_xiaomi.git -b lineage-21 hardware/xiaomi
-
-# MIUI Camera Source
-echo -e "${color}Cloning MIUI Camera from GitLab${end}"
-git clone https://gitlab.com/tanvirr007/proprietary_vendor_xiaomi_camera -b uvite-sm6225 vendor/xiaomi/camera
-
-
