@@ -23,6 +23,9 @@ PRODUCT_MANUFACTURER := Xiaomi
 
 PRODUCT_GMS_CLIENTID_BASE := android-xiaomi
 
+# Boot Animaton
+TARGET_BOOT_ANIMATION_RES := 1080
+
 # The Pixel Project Flags
 CUSTOM_BUILD_TYPE := Official
 TARGET_SUPPORTS_QUICK_TAP := true
