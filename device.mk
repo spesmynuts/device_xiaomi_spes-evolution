@@ -30,6 +30,9 @@ PRODUCT_USE_DYNAMIC_PARTITIONS := true
 # API level
 PRODUCT_SHIPPING_API_LEVEL := 30
 
+# Inherit moto dolby
+$(call inherit-product, vendor/motorola-dolby/setup.mk)
+
 # A/B
 AB_OTA_POSTINSTALL_CONFIG += \
     RUN_POSTINSTALL_system=true \
