@@ -25,3 +25,7 @@ git clone https://github.com/tanvirr007/kernel_xiaomi_sm6225 -b NaughtySilver ke
 # Lineage-21 Hardware Source
 echo -e "${color}Cloning Hardware from Lineage-21${end}"
 git clone https://github.com/LineageOS/android_hardware_xiaomi.git -b lineage-21 hardware/xiaomi
+
+# Include debug tools
+echo -e "${color}Cloning debug tools${end}"
+git clone https://github.com/Roynas-Android-Playground/hardware_samsung-extra_interfaces.git hardware/samsung-ext/interfaces

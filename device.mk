@@ -10,6 +10,9 @@ $(call inherit-product, $(SRC_TARGET_DIR)/product/updatable_apex.mk)
 # Include GSI
 $(call inherit-product, $(SRC_TARGET_DIR)/product/developer_gsi_keys.mk)
 
+# Include debug tools
+$(call inherit-product, hardware/samsung-ext/interfaces/debug-tools/debug.mk)
+
 # Enable Virtual A/B
 ifneq ($(WITH_GMS),true)
 $(call inherit-product, $(SRC_TARGET_DIR)/product/virtual_ab_ota/launch_with_vendor_ramdisk.mk)

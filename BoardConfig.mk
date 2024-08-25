@@ -255,6 +255,7 @@ NEED_AIDL_NDK_PLATFORM_BACKEND := true
 
 # Sepolicy
 include device/qcom/sepolicy_vndr/legacy-um/SEPolicy.mk
+include hardware/samsung-ext/interfaces/sepolicy/SEPolicy.mk
 
 SYSTEM_EXT_PRIVATE_SEPOLICY_DIRS += $(DEVICE_PATH)/sepolicy/private
 ifdef CR_VERSION
